@@ -1,0 +1,32 @@
+retrieval_skills:
+  - faiss
+  - pinecone
+  - qdrant
+  - milvus
+  - weaviate
+  - elastic
+  - opensearch
+  - bm25
+
+ranking_skills:
+  - ndcg
+  - ltr
+  - mrr
+  - map
+  - ranking
+  - recommendation
+
+ml_skills:
+  - rag
+  - fine-tuning
+  - transformers
+  - embeddings
+  - llm
+  - prompt
+
+product_skills:
+  - saas
+  - shipped
+  - launched
+  - production
+  - a/b test

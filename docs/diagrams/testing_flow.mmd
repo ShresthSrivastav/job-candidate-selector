@@ -1,0 +1,42 @@
+flowchart TD
+    subgraph Unit_Tests["Unit Tests — tests/"]
+        A1["test_retrieval_intelligence.py<br>8 tests"]
+        A2["test_ownership.py<br>10 tests"]
+        A3["test_alignment.py<br>10 tests"]
+        A4["test_risk.py<br>10 tests"]
+        A5["test_reranker.py<br>17 tests"]
+        A6["test_ranking.py<br>8 tests"]
+        A7["test_evidence.py<br>10 tests"]
+        A8["test_ingestion.py<br>4 tests"]
+        A9["test_parser_edge_cases.py<br>11 tests"]
+        A10["test_pipeline_edge_cases.py<br>8 tests"]
+        A11["test_csv_generation.py<br>4 tests"]
+        A12["test_malformed_records.py<br>8 tests"]
+        A13["test_features_retrieval.py<br>9 tests"]
+        A14["test_features_evidence.py<br>2 tests"]
+        A15["test_features_honeypot.py<br>2 tests"]
+        A16["test_features_quality.py<br>3 tests"]
+        A17["test_candidate_parser.py<br>1 test"]
+        A18["test_jd_parser.py<br>1 test"]
+    end
+
+    subgraph Integration_Tests["Integration Tests — tests/integration/"]
+        B1["test_pipeline.py<br>7 tests"]
+        B2["test_release_generation.py<br>7 tests"]
+        B3["test_ranking_consistency.py<br>6 tests"]
+    end
+
+    subgraph Prefilter_Tests
+        C1["test_prefilter_small.py<br>1 test"]
+    end
+
+    Unit_Tests --> D["Coverage Report<br>>= 90% target"]
+    Integration_Tests --> D
+    Prefilter_Tests --> D
+    D --> E["97+ Tests Total"]
+    E --> F["Validation Checks"]
+    F --> G["CI Pipeline Pass"]
+
+    style Unit_Tests fill:#e3f2fd
+    style Integration_Tests fill:#e8f5e9
+    style Prefilter_Tests fill:#fff3e0

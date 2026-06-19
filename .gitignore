@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+
+# Environment
+.env
+.env.local
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data (large, not tracked)
+Data/candidates.jsonl
+Data/candidates.csv
+Data/candidate_schema.json
+Data/sample_candidates.json
+
+# Pipeline outputs (generated)
+outputs/*.csv
+outputs/*.json
+outputs/*.pkl
+outputs/*.md
+outputs/*.html
+
+# Archives (research, not production)
+archive/
+
+# Release (frozen, not tracked)
+release_v110/
+
+# Docker
+.dockerignore
+
+# Logs
+*.log

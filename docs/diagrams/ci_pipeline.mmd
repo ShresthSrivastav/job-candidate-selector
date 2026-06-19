@@ -1,0 +1,18 @@
+flowchart LR
+    A["Git Push / PR"] --> B["Checkout Code"]
+    B --> C["Setup Python<br>3.10 / 3.11 / 3.12"]
+    C --> D["Install Dependencies<br>pip install -r requirements.txt<br>pip install -r requirements-dev.txt"]
+    D --> E["Lint<br>flake8 src/ scripts/ tests/"]
+    D --> F["Format Check<br>black --check --diff"]
+    E --> G["Unit Tests<br>pytest tests/ --cov=src"]
+    F --> G
+    G --> H["Integration Tests<br>pytest tests/integration/"]
+    H --> I["Coverage Report<br>coverage xml"]
+    I --> J["Upload to Codecov"]
+    J --> K["Status Badges<br>CI / Coverage / Python"]
+
+    style A fill:#fff3e0
+    style G fill:#e8f5e9
+    style H fill:#e8f5e9
+    style J fill:#e3f2fd
+    style K fill:#f3e5f5

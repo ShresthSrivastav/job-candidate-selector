@@ -1,0 +1,74 @@
+name: Release Validation
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'outputs/phase46_submission.csv'
+      - 'release_v110/**'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'outputs/phase46_submission.csv'
+      - 'release_v110/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Validate release manifest
+      run: |
+        python -c "
+import json
+with open('release_v110/MANIFEST.json') as f:
+    m = json.load(f)
+assert m['release_version'] == 'v1.1.0-final'
+assert len(m['artifacts']) >= 8
+print('Manifest valid: {} artifacts'.format(len(m['artifacts'])))
+"
+    - name: Verify submission SHA256
+      run: |
+        python -c "
+import hashlib
+with open('outputs/phase46_submission.csv', 'rb') as f:
+    h1 = hashlib.sha256(f.read()).hexdigest()
+with open('release_v110/phase46_submission.csv', 'rb') as f:
+    h2 = hashlib.sha256(f.read()).hexdigest()
+assert h1 == h2, f'SHA256 mismatch: {h1} != {h2}'
+print(f'Submission SHA256 verified: {h1}')
+"
+    - name: Validate CSV schema
+      run: |
+        python -c "
+import csv
+with open('release_v110/phase46_submission.csv', encoding='utf-8') as f:
+    rows = list(csv.DictReader(f))
+assert len(rows) == 100, f'Expected 100, got {len(rows)}'
+required = {'candidate_id', 'rank', 'score', 'reasoning'}
+assert required.issubset(rows[0].keys())
+ids = [r['candidate_id'] for r in rows]
+assert len(set(ids)) == 100, 'Duplicate IDs'
+scores = [float(r['score']) for r in rows]
+for i in range(len(scores)-1):
+    assert scores[i] >= scores[i+1], f'Not descending at {i}'
+print('CSV validation passed: 100 rows, unique IDs, scores descending')
+"
+    - name: Validate FROZEN_STATE
+      run: |
+        python -c "
+import json
+with open('release_v110/FROZEN_STATE.json') as f:
+    s = json.load(f)
+assert s['version'] == 'v1.1.0-final'
+assert s['submission_approved'] is True
+assert s['modification_allowed'] is False
+print('Frozen state valid')
+"

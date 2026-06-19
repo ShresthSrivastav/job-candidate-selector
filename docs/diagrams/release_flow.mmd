@@ -1,0 +1,40 @@
+flowchart TD
+    subgraph Stage1["Stage 1: Phase 4.5 Pipeline"]
+        A["python phase45_pipeline.py<br>--candidates Data/candidates.jsonl<br>--jd Data/job_description.txt<br>--stage2_k 20000"]
+        A --> B["Stream + Normalize 100K candidates"]
+        B --> C["Eligibility + Cheap Features"]
+        C --> D["Prefilter Top-20K"]
+        D --> E["Expensive Features"]
+        E --> F["RRF + Elite Reranker"]
+        F --> G["Phase 4.5 Submission<br>outputs/phase45_submission.csv"]
+        E --> H[".full_cache.pkl<br>20000 rows with all features"]
+    end
+
+    subgraph Stage2["Stage 2: Phase 4.6 Optimization"]
+        H --> I["python phase46_optimization.py"]
+        I --> J["RRF (4 fields, k=60)"]
+        J --> K["Elite Reranker (top-1000)"]
+        K --> L["Pairwise Reranker (top-200)"]
+        L --> M["Phase 4.6 Submission<br>outputs/phase46_submission.csv"]
+        M --> N["Phase 4.6 Top-100 JSON<br>outputs/phase46_top100.json"]
+        I --> O["Validation Reports<br>outputs/phase46_report.md<br>outputs/phase46_vs_phase45.md<br>outputs/phase46_submission_audit.md"]
+    end
+
+    subgraph Stage3["Stage 3: Release Freeze"]
+        M --> P["python phase46_release_freeze.py"]
+        N --> P
+        O --> P
+        P --> Q["12 Validation Checks"]
+        Q -->|"All PASS"| R["Copy to release_v110/"]
+        R --> S["MANIFEST.json<br>SHA256 manifest"]
+        R --> T["SUBMISSION_CERTIFICATE.md<br>Certification report"]
+        R --> U["FROZEN_STATE.json<br>modification_allowed: false"]
+        R --> V["VERSION<br>v1.1.0-final"]
+        R --> W["Release Artifacts<br>submission.csv, top100.json,<br>reports, audits"]
+    end
+
+    style Stage1 fill:#e3f2fd
+    style Stage2 fill:#e8f5e9
+    style Stage3 fill:#fff3e0
+    style H fill:#ffccbc
+    style Q fill:#c8e6c9

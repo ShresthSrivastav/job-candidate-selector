@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  redrobe:
+    build: .
+    volumes:
+      - ./Data:/app/Data:ro
+      - ./outputs:/app/outputs
+      - ./configs:/app/configs:ro
+    environment:
+      - REDROBE_CANDIDATES=/app/Data/candidates.jsonl
+      - REDROBE_JD=/app/Data/job_description.txt
+      - REDROBE_OUTPUT=/app/outputs
+    user: "1001:1001"

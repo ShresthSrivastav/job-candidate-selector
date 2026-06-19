@@ -1,0 +1,16 @@
+retrieval_weights:
+  faiss: 4
+  bm25: 4
+  hybrid: 5
+  elasticsearch: 4
+  elastic: 4
+  qdrant: 3
+  pinecone: 3
+  rag: 5
+  ndcg: 5
+  mrr: 5
+  map: 5
+  recommendation: 4
+
+skill_trust_multiplier: 1.0
+evidence_multiplier: 1.8

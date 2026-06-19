@@ -1,0 +1,66 @@
+flowchart TD
+    subgraph Input
+        A["Normalized Candidate<br>candidate_id, profile_title,<br>skills_names, career_text,<br>years_of_experience, raw_json"]
+    end
+
+    subgraph Cheap_Features["Cheap Features (Stage 2a)"]
+        B["retrieval_depth<br>5-dimension depth score"]
+        C["retrieval_maturity<br>Hierarchical L0-L5"]
+        D["retrieval_specialist<br>Weighted signal probability"]
+        E["risk_score<br>stuffing, buzzwords,<br>generic, consulting"]
+        F["career_alignment<br>Title + skill alignment"]
+        G["behavioral<br>Platform engagement"]
+        H["eligibility<br>JD coverage + years fit"]
+    end
+
+    subgraph Expensive_Features["Expensive Features (Stage 2b)"]
+        I["evidence_score<br>Production evidence snippets"]
+        J["retrieval_impact<br>Quantified impact (15 patterns)"]
+        K["ownership_score<br>Verbs + seniority + scale"]
+        L["candidate_quality_v2<br>Completeness + consistency"]
+    end
+
+    subgraph Composite
+        M["retrieval_intelligence<br>0.30*expertise + 0.20*depth<br>+ 0.20*maturity + 0.15*specialist<br>+ 0.15*impact"]
+    end
+
+    subgraph Ranking_Stages
+        N["RRF Scoring<br>4 fields, k=60"]
+        O["Elite Reranker<br>Weighted + risk discount"]
+        P["Pairwise Reranker<br>Copeland tournament"]
+    end
+
+    A --> H
+    A --> B
+    A --> C
+    A --> D
+    A --> E
+    A --> F
+    A --> G
+    H -->|"eligibility >= 0.25"| B
+
+    B --> M
+    C --> M
+    D --> M
+    E --> O
+
+    A --> I
+    A --> J
+    A --> K
+    A --> L
+    I --> M
+    J --> M
+
+    M --> N
+    I --> N
+    F --> N
+    K --> N
+
+    N --> O
+    O --> P
+
+    style A fill:#e1f5fe
+    style Cheap_Features fill:#fff3e0
+    style Expensive_Features fill:#e8f5e9
+    style Composite fill:#f3e5f5
+    style Ranking_Stages fill:#ffebee

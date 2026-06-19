@@ -1,0 +1,21 @@
+flowchart TD
+    A["Candidate Data<br>(100K JSONL)"] --> B["Stream JSONL<br>batch_size=10000"]
+    B --> C["Normalize Candidate<br>candidate_parser.py"]
+    C --> D["Parse JD Requirements<br>jd_parser.py"]
+    D --> E["Eligibility Filter<br>threshold >= 0.25"]
+    E --> F{"Eligible?"}
+    F -->|"No (44.6%)"| G["Skipped"]
+    F -->|"Yes (55.4%)"| H["Cheap Features<br>depth, maturity, specialist,<br>risk, alignment, behavioral"]
+    H --> I["Cheap Score Composite<br>0.35*depth + 0.25*maturity +<br>0.25*specialist + 0.15*alignment"]
+    I --> J["Sort by Cheap Score<br>Keep Top-K (20,000)"]
+    J --> K["Expensive Features<br>evidence, impact, ownership,<br>quality_v2, jd_coverage"]
+    K --> L["Retrieval Intelligence<br>0.30*expertise + 0.20*depth +<br>0.20*maturity + 0.15*specialist +<br>0.15*impact"]
+    L --> M["RRF Scoring<br>4 fields, k=60"]
+    M --> N["Elite Reranker<br>Top 1000"]
+    N --> O["Pairwise Reranker<br>Top 200"]
+    O --> P["Top 100"]
+    P --> Q["Reasoning Generator"]
+    Q --> R["Submission CSV<br>outputs/phase46_submission.csv"]
+    R --> S["Release Freeze<br>release_v110/"]
+    D --> E
+    D --> J
