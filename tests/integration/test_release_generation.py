@@ -1,4 +1,7 @@
-import sys, os, json, csv
+import sys
+import os
+import json
+import csv
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

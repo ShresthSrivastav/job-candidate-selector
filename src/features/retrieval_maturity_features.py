@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 
 def compute_retrieval_maturity(normalized_candidate: Dict[str, Any]) -> Dict[str, float]:

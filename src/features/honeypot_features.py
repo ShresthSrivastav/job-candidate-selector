@@ -1,7 +1,6 @@
 from __future__ import annotations
 from typing import Dict, Any, List
 from datetime import datetime
-import re
 
 
 def _parse_date(d: str):

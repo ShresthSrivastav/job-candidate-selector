@@ -8,7 +8,7 @@ st.set_page_config(page_title="RedRobe — Downloads", layout="wide")
 
 page_header("Downloads", "Export results and reports.")
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if not outputs_exist(ROOT):
     info_box("No results found. Run the pipeline in the Ranking tab first.")

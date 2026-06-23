@@ -1,6 +1,11 @@
 """Phase 4.6 Release Freeze — v1.1.0-final"""
 from __future__ import annotations
-import sys, os, json, csv, time, hashlib
+import sys
+import os
+import json
+import csv
+import time
+import hashlib
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 RELEASE_DIR = "release_v110"
@@ -144,10 +149,10 @@ with open(f"{RELEASE_DIR}/SUBMISSION_CERTIFICATE.md", "w", encoding="utf-8") as 
 print("=" * 30)
 print("RELEASE_PACKAGE_READY = YES")
 print("=" * 30)
-print(f"  Version: v1.1.0-final")
+print("  Version: v1.1.0-final")
 print(f"  Release directory: {RELEASE_DIR}/")
 print(f"  Submission File: {RELEASE_DIR}/phase46_submission.csv")
-print(f"  Status: SUBMISSION_READY")
+print("  Status: SUBMISSION_READY")
 print()
 print("  Validation:")
 for name, ok in validations:

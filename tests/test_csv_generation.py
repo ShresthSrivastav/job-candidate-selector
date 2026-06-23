@@ -1,4 +1,7 @@
-import sys, os, csv, json, io
+import sys
+import os
+import csv
+import io
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from src.features.reasoning_generator import generate_reasoning
@@ -18,6 +21,10 @@ def make_row(cid, score, ri=0.5, es=0.5, os_=0.5, ca=0.5, bs=0.5, av=0.5, hp=0.0
         "jd_coverage": 0.5,
         "honeypot_probability": hp,
         "reasoning": "",
+        "profile_title": "ML Engineer",
+        "years_of_experience": 5.0,
+        "retrieval_specialist_signal_count": 8,
+        "recruiter_response_rate": 0.75,
     }
 
 
@@ -26,7 +33,7 @@ def test_reasoning_generation():
     reasoning = generate_reasoning(row, 1, 95.0)
     assert isinstance(reasoning, str)
     assert len(reasoning) > 0
-    assert "95" in reasoning or "95.0" in reasoning
+    assert "ML Engineer with 5.0 yrs; 8 AI core skills;" in reasoning
 
 
 def test_reasoning_includes_candidate_id():

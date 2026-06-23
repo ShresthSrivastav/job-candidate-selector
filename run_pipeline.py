@@ -4,13 +4,16 @@ Usage:
     python run_pipeline.py --candidates Data/candidates.jsonl --jd Data/job_description.txt
 """
 from __future__ import annotations
-import sys, os, time, json, argparse
+import sys
+import os
+import time
+import json
+import argparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from scripts.phase45_pipeline import phase45_pipeline
 from scripts.phase46_optimization import run_phase46, validate, write_submission, load_full
-from scripts.phase46_release_freeze import validate_submission
 
 
 DEFAULT_CANDIDATES = "Data/candidates.jsonl"
@@ -59,7 +62,28 @@ def main():
     top100, runtime = run_phase46(candidates)
     metrics = validate(top100)
     metrics["runtime"] = runtime
+    # write_submission sorts, normalizes scores, and re-ranks internally
     write_submission(top100, "outputs/phase46_submission.csv")
+
+    # Read back sorted CSV to get final ordering for JSON
+    import csv
+    with open("outputs/phase46_submission.csv", encoding="utf-8") as f:
+        ordered_ids = [r["candidate_id"] for r in csv.DictReader(f)]
+    id_order = {cid: i for i, cid in enumerate(ordered_ids)}
+    sorted_top100 = sorted(top100, key=lambda r: id_order.get(r["candidate_id"], 9999))
+
+    with open("outputs/phase46_top100.json", "w", encoding="utf-8") as f:
+        serializable = []
+        for i, row in enumerate(sorted_top100):
+            s = dict(row)
+            s["rank"] = i + 1
+            s["final_score"] = round(row["final_score"] / 100.0, 4)
+            if isinstance(s.get("skills_names"), list):
+                s["skills_names"] = [str(x) for x in s["skills_names"]]
+            if isinstance(s.get("top_evidence_snippets"), list):
+                s["top_evidence_snippets"] = [str(x) for x in s["top_evidence_snippets"]]
+            serializable.append(s)
+        json.dump(serializable, f, indent=2, default=str)
 
     p46_ids = {r["candidate_id"] for r in top100}
     p45_ids = {r["candidate_id"] for r in p45_csv}
@@ -95,13 +119,13 @@ def main():
     print("=" * 60)
     print(f"Pipeline complete in {total_time:.2f}s")
     print("=" * 60)
-    print(f"Outputs:")
-    print(f"  outputs/phase46_submission.csv")
-    print(f"  outputs/phase46_top100.json")
-    print(f"  outputs/phase46_report.md")
-    print(f"  outputs/phase46_vs_phase45.md")
-    print(f"  outputs/phase46_submission_audit.md")
-    print(f"  release_v110/ (after freeze)")
+    print("Outputs:")
+    print("  outputs/phase46_submission.csv")
+    print("  outputs/phase46_top100.json")
+    print("  outputs/phase46_report.md")
+    print("  outputs/phase46_vs_phase45.md")
+    print("  outputs/phase46_submission_audit.md")
+    print("  release_v110/ (after freeze)")
 
 
 if __name__ == "__main__":

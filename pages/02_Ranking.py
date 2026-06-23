@@ -3,14 +3,13 @@ import streamlit as st
 import os
 import time
 from ui.utils.pipeline_runner import run_pipeline
-from ui.utils.data_loader import outputs_exist
 from ui.components.badges import page_header, success_box, error_box
 
 st.set_page_config(page_title="RedRobe — Ranking", layout="wide")
 
 page_header("Run Ranking Pipeline", "Execute the Phase 4.6 ranking pipeline.")
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "Data")
 
 jd_path = os.path.join(DATA_DIR, "job_description.txt")
@@ -32,9 +31,9 @@ if not jd_ok or not cand_ok:
 
 st.divider()
 st.markdown("### Pipeline Configuration")
-st.caption(f"Candidates file: Data/candidates.jsonl")
-st.caption(f"JD file: Data/job_description.txt")
-st.caption(f"Output: outputs/phase46_submission.csv")
+st.caption("Candidates file: Data/candidates.jsonl")
+st.caption("JD file: Data/job_description.txt")
+st.caption("Output: outputs/phase46_submission.csv")
 
 if st.button("Run Pipeline", type="primary", use_container_width=True):
     progress_bar = st.progress(0, text="Starting pipeline...")

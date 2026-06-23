@@ -1,5 +1,4 @@
 from __future__ import annotations
-import re
 from typing import Dict, Any, List, Set
 
 SKILL_STUFFING_PATTERNS: Set[str] = {

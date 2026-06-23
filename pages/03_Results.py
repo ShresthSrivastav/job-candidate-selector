@@ -1,7 +1,6 @@
 from __future__ import annotations
 import os
 import streamlit as st
-import pandas as pd
 from ui.utils.data_loader import load_top100_json, get_output_paths, outputs_exist
 from ui.components.tables import render_top100_table
 from ui.components.badges import page_header, info_box
@@ -10,7 +9,7 @@ st.set_page_config(page_title="RedRobe — Results", layout="wide")
 
 page_header("Top-100 Ranking Results", "Interactive table with search, sort, and filter.")
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if not outputs_exist(ROOT):
     info_box("No results found. Run the pipeline in the Ranking tab first.")

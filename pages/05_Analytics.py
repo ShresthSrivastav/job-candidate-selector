@@ -10,7 +10,7 @@ st.set_page_config(page_title="RedRobe — Analytics", layout="wide")
 
 page_header("Analytics Dashboard", "Score distributions, feature analysis, and correlation insights.")
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if not outputs_exist(ROOT):
     info_box("No results found. Run the pipeline first.")

@@ -8,7 +8,7 @@ st.set_page_config(page_title="RedRobe — Upload", layout="wide")
 
 page_header("Upload Files", "Upload Job Description and Candidate data for ranking.")
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(ROOT, "Data")
 os.makedirs(DATA_DIR, exist_ok=True)
 

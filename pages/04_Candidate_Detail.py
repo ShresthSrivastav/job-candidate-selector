@@ -10,7 +10,7 @@ st.set_page_config(page_title="RedRobe — Candidate Detail", layout="wide")
 
 page_header("Candidate Detail View", "Full breakdown of an individual candidate's ranking.")
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if not outputs_exist(ROOT):
     info_box("No results found. Run the pipeline first.")

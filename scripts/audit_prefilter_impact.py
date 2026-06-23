@@ -3,16 +3,20 @@ Runs Phase 4.5 with K=100000 to capture all eligible candidates,
 then simulates K=100000, 50000, 20000, 10000 by slicing and running Phase 4.6 ranking.
 """
 from __future__ import annotations
-import sys, os, time, json, csv, pickle
+import sys
+import os
+import time
+import json
+import pickle
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.ranking.rrf_ranker import compute_rrf_scores
 from src.ranking.elite_reranker import elite_rerank
-from src.features.reasoning_generator import generate_reasoning
 
 # Also import Phase 4.5 pipeline to regenerate cache
 from scripts.phase45_pipeline import phase45_pipeline
+from src.parser.jd_parser import JDParser
 
 CANDIDATES_PATH = "Data/candidates.jsonl"
 JD_PATH = "Data/job_description.txt"
@@ -49,7 +53,6 @@ else:
     print(f"Loaded {len(all_rows)} rows")
 
 # Also load jd_reqs for consistency
-from src.parser.jd_parser import JDParser
 jd_parser = JDParser()
 with open(JD_PATH, "r", encoding="utf-8") as f:
     jd_text = f.read()
@@ -168,7 +171,7 @@ for k in [50000, 20000, 10000]:
         for cid in sorted(missing_ids):
             print(f"    - {cid}")
     else:
-        print(f"  No candidates lost from K=100000 top100")
+        print("  No candidates lost from K=100000 top100")
 
     if extra_ids:
         print(f"  Candidates in K={k} top100 but NOT in K=100000 top100:")
@@ -184,7 +187,7 @@ for k in [20000]:
     missing = overlap_data[k]["missing_from_baseline"]
     if not missing:
         print(f"  No candidates removed by K={k} prefilter from final Top100.")
-        print(f"  The prefilter does NOT remove any would-be Top100 candidates.")
+        print("  The prefilter does NOT remove any would-be Top100 candidates.")
     else:
         print(f"  {len(missing)} candidates removed by K={k} prefilter:")
         for cid in missing:
@@ -342,6 +345,6 @@ if missing_current:
     for cid in missing_current:
         print(f"    - {cid}")
 print(f"  Recommendation: {recommendation}")
-print(f"\n  Reports written:")
-print(f"    outputs/prefilter_impact_audit.md")
-print(f"    outputs/prefilter_impact_audit.json")
+print("\n  Reports written:")
+print("    outputs/prefilter_impact_audit.md")
+print("    outputs/prefilter_impact_audit.json")

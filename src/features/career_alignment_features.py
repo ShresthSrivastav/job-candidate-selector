@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict, Any, List, Set
+from typing import Dict, Any, Set
 
 
 RETRIEVAL_SIGNALS: Set[str] = {

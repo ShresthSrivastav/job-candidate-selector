@@ -1,4 +1,7 @@
-import sys, os, json, csv, subprocess
+import sys
+import os
+import csv
+import subprocess
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -35,7 +38,7 @@ def test_unique_ids():
     with open(SUBMISSION, encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
     ids = [r["candidate_id"] for r in rows]
-    assert len(set(ids)) == 100, f"Duplicate IDs found"
+    assert len(set(ids)) == 100, "Duplicate IDs found"
 
 
 def test_reasoning_not_empty():

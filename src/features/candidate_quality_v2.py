@@ -1,6 +1,5 @@
 from __future__ import annotations
 from typing import Dict, Any, List
-from datetime import datetime
 
 
 def _years_from_career(career_history: List[Dict[str, Any]]) -> float:

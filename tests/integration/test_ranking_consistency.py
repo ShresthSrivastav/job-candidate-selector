@@ -1,5 +1,7 @@
 """Tests that ranking is deterministic and produces expected distributions."""
-import sys, os, json
+import sys
+import os
+import json
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

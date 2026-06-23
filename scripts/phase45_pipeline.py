@@ -6,7 +6,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import argparse
 import time
-import math
 import csv
 import json
 from typing import Dict, Any, List
@@ -15,7 +14,6 @@ from src.utils.logger import info, warning
 from src.ingestion.load_candidates import stream_jsonl
 from src.parser.jd_parser import JDParser
 from src.parser.candidate_parser import normalize_candidate
-from src.features.honeypot_features import detect_honeypot
 from src.features.behavior_features import compute_behavioral_features
 from src.features.reasoning_generator import generate_reasoning
 from src.features.eligibility_features import compute_eligibility
