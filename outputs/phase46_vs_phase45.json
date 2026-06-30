@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-06-23 08:54:28",
+  "pipeline": "Phase 4.6",
+  "changes": [
+    "Removed candidate_quality_v2 from RRF",
+    "Added Pairwise Elite Reranker on top 200"
+  ],
+  "metrics": {
+    "phase45": {
+      "runtime": 52.85,
+      "score_spread": 22.79,
+      "specialists": 100.0,
+      "zero_retrieval": 0,
+      "hp_high_risk": 0,
+      "avg_ret_intel": 0.4687
+    },
+    "phase46": {
+      "runtime": 0.07,
+      "score_spread": 50.5,
+      "specialists": 100.0,
+      "zero_retrieval": 0,
+      "hp_high_risk": 0,
+      "avg_ret_intel": 0.4867
+    }
+  },
+  "overlap_pct": 80,
+  "success_criteria": {
+    "spread_gt_25": true,
+    "specialists_eq_100": true,
+    "runtime_lt_70": true,
+    "hp_eq_0": true
+  },
+  "decision": "UPGRADE_TO_PHASE46"
+}

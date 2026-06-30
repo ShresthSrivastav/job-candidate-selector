@@ -1,0 +1,77 @@
+{
+  "timestamp": "2026-06-09 19:02:43",
+  "submission_file": "outputs/phase46_submission.csv",
+  "all_checks_pass": true,
+  "decision": "SUBMISSION_APPROVED = YES",
+  "checks": [
+    {
+      "check": "RETRIEVAL_SPECIALIST_PCT",
+      "result": "PASS",
+      "detail": "100.0%"
+    },
+    {
+      "check": "ZERO_RETRIEVAL_COUNT",
+      "result": "PASS",
+      "detail": "0"
+    },
+    {
+      "check": "HONEYPOT_LEAKAGE",
+      "result": "PASS",
+      "detail": "0 high-risk"
+    },
+    {
+      "check": "DUPLICATE_IDS",
+      "result": "PASS",
+      "detail": "100/100 unique"
+    },
+    {
+      "check": "MISSING_REASONING",
+      "result": "PASS",
+      "detail": "0 missing"
+    },
+    {
+      "check": "RANK_MONOTONICITY",
+      "result": "PASS",
+      "detail": "ranks 1-100"
+    },
+    {
+      "check": "SCORE_MONOTONICITY",
+      "result": "PASS",
+      "detail": "descending=True"
+    },
+    {
+      "check": "REASONING_CONSISTENCY",
+      "result": "PASS",
+      "detail": "100/100 match JSON"
+    },
+    {
+      "check": "RETRIEVAL_INTELLIGENCE_CONSISTENCY",
+      "result": "PASS",
+      "detail": "0 CSV/JSON score mismatches"
+    },
+    {
+      "check": "CSV_SCHEMA_VALID",
+      "result": "PASS",
+      "detail": "fields: {'score', 'candidate_id', 'rank', 'reasoning'}"
+    },
+    {
+      "check": "RUNTIME_VALIDATION",
+      "result": "PASS",
+      "detail": "under 70s (verified)"
+    },
+    {
+      "check": "TOP100_UNIQUENESS",
+      "result": "PASS",
+      "detail": "CSV=100, JSON=100"
+    }
+  ],
+  "metrics": {
+    "retrieval_specialist_pct": 100.0,
+    "zero_retrieval_count": 0,
+    "honeypot_high_risk": 0,
+    "score_spread": 50.5,
+    "score_min": 49.5,
+    "score_max": 100.0,
+    "avg_ret_intel": 0.4867
+  }
+}
