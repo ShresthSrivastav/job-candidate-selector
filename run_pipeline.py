@@ -12,8 +12,9 @@ import argparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import pickle
 from scripts.phase45_pipeline import phase45_pipeline
-from scripts.phase46_optimization import run_phase46, validate, write_submission, load_full
+from scripts.phase46_optimization import run_phase46, validate, write_submission
 
 
 DEFAULT_CANDIDATES = "Data/candidates.jsonl"
@@ -49,6 +50,11 @@ def main():
             stage2_k=args.stage2_k,
         )
         print(f"Phase 4.5 complete: {len(rows)} rows in {time.time() - t0:.2f}s")
+
+        # Save cache for Phase 4.6
+        with open("outputs/.full_cache.pkl", "wb") as f:
+            pickle.dump((rows, None), f)
+        print("Cache saved to outputs/.full_cache.pkl")
     else:
         print("Skipping Phase 4.5 (--skip-phase45)")
 
@@ -57,7 +63,12 @@ def main():
     print("Phase 4.6: Optimized Ranking")
     print("=" * 60)
     t0 = time.time()
-    candidates, jd_reqs, p45_csv = load_full()
+    # Load from cache (saved by Phase 4.5 above)
+    with open("outputs/.full_cache.pkl", "rb") as f:
+        candidates, _ = pickle.load(f)
+    with open("outputs/phase45_submission.csv", "r", encoding="utf-8") as f:
+        import csv
+        p45_csv = list(csv.DictReader(f))
     print(f"Loaded {len(candidates)} candidates from cache")
     top100, runtime = run_phase46(candidates)
     metrics = validate(top100)
